@@ -7,6 +7,7 @@
 			background-color: #fdfdfd;
 			color: #545454;
 		}
+
 		.center-text{
 			text-align: center;
 		}
@@ -15,9 +16,20 @@
 			height: 800px;
 		}
 
+		.half-width{
+			width: 48%;
+			display: inline-block;
+			margin-top: 15px;
+			margin-left: 2.5px;
+		}
+
+		.right-textbox{
+			margin-left: 15px;
+		}
+
 		.btn-lime{
 			color: #fdfdfd;
-  			background-color: rgb(178, 217, 108);
+  			background-color: rgb(126, 168, 68);
   			border-color: rgb(126, 168, 68);
 		}
 
@@ -25,12 +37,37 @@
 			color: #fdfdfd;
 		}
 
+		.horiz-space{
+			height: 40px;
+		}
+
+		#topContainer{
+			padding-left: 0;
+		}
+
+		#infoContainer{
+			padding-top: 15px;
+		}
+
+		.padded-row{
+			margin-top: 15px;
+			margin-bottom: 15px;
+		}
+
+		input.has-error, select.has-error {
+        	border: 1px solid #b94a48;
+        	box-shadow: 0px 1px 1px #b94a48 inset, 0px 0px 6px #b94a48;
+    	}
+
 	</style>
 	<script type="text/javascript">
 	$(function(){
+		var email_regex = new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 		var infoContainer = $('#infoContainer');
 		var versionContainer = $('#versionContainer');
 		var priceContainer = $('#priceContainer');
+		var importantFields = ['password', 'email']
+		var error_class = 'has-error'
 
 		var scrollToContainer = function(container){
 			$('html,body').animate({
@@ -47,12 +84,44 @@
 			scrollToContainer(container);
 		}
 
+		var validate_input = function(){
+			var valid = true;
+			var inputs = $('.signUp');
+
+			$.each(inputs, function(index, input){
+				var input_object = $(input);
+				if(input.value.length === 0){
+					valid = false;
+					input_object.addClass(error_class);
+				}else if($.inArray(input.id, importantFields)){
+					if(input.id === "password" && input.value.length < 8){
+						valid = false;
+						input_object.addClass(error_class);
+					}
+						
+					if(input.id === "email" && !email_regex.test(input.value)){
+						valid = false;
+						input_object.addClass(error_class);
+					}
+				}else{
+					input_object.removeClass(error_class);
+				}
+			});
+
+			return valid;
+		}
+
 		$('#tryIt').on('click', function(){
 			goToContainer(infoContainer);
 		});
 
 		$('#continueSignUp').on('click', function(){
-			goToContainer(versionContainer);
+			var valid = validate_input();
+			if(valid){
+				//todo:server-side validation (model-binding)
+				goToContainer(versionContainer);
+			}
+			return false;
 		});
 
 		$('.version-btn').on('click', function(){
@@ -63,30 +132,68 @@
 	</script>
 </head>
 
-<div id="topContainer" class="tall container-fluid">
+<div id="topContainer" class="container-fluid">
 	<div class="row">
-  		<div id="topImage" class="col-lg-8"><h1>HEADER IMAGE HERE</h1></div>
+  		<div id="topImage" class="col-lg-8"><img class="img-responsive img-rounded" src="/assets/lime-logo.png"/></div>
   		<div id="getStarted" class="col-lg-4">
-   			<h2 class="center-text">A fresh approach</h2>
-   			<h5 class="center-text">a blurb about how awesome it is to help people all around the world.<br>
-   				It should be kinda long so that it fills the available space nicely. Marketing will take care of this. <br>They always have plenty to say.</h5>
-   				<a href="#" id="tryIt" class="btn btn-lime btn-block">Try it free</a>
+   			<h1 class="center-text">A fresh approach to assistance</h1>
+   			<div class="horiz-space"></div>
+   			<h3 class="center-text">Down the street or across the pond.</h3>
+   			<div class="horiz-space"></div>
+   			<h3 class="center-text">Help your team accomplish their goals more efficiently.</h3>
+   			<div class="horiz-space"></div>
+   			<h3 class="center-text">Save money one trip at a time.</h3>
+   			<a href="#" id="tryIt" class="btn btn-lime btn-block">Get started for free</a>
    		</div>
 	</div>
 </div>
 
 <div id="infoContainer" class="tall container-fluid hidden">
 	<div class="row">
-		<div class="col-lg-4"></div>
 		<div class="col-lg-4">
-			<input class="signUp form-control half-width" type="text" placeholder="First name"><input class="signUp form-control" type="text" placeholder="Last name"/><br>
-			<input class="signUp form-control half-width" type="text" placeholder="Email"><br>
-			<input class="signUp form-control" type="text" placeholder="Password"><br>
-			<input class="signUp form-control" type="text" placeholder="Business name"><input class="signUp form-control" type="text" placeholder="Business size"><br>
-			<input class="signUp form-control" type="text" placeholder="Number of lime users"><br>
+			<img src="/assets/juicy-limes.JPG" class="img-responsive img-circle">
+		</div>
+		<div class="col-lg-4" id="info-div">
+			<div class="row">
+				<div class="col-lg-6">
+					<input class="signUp form-control" type="text" id="first_name" placeholder="First name">
+				</div>
+				<div class="col-lg-6">
+					<input class="signUp form-control" type="text" id="last_name" placeholder="Last name">
+				</div>
+			</div>
+			<div class="row padded-row">
+				<div class="col-lg-6">
+					<input class="signUp form-control" type="text" id="email" placeholder="Email">
+				</div>
+				<div class="col-lg-6">
+					<input class="signUp form-control" type="password" id="password" data-help="passwordHelp" placeholder="Password">
+					<span id="passwordHelp" class="help-block hidden">Must be at least 8 characters.</span>
+				</div>
+			</div>
+			<div class="row padded-row">
+				<div class="col-lg-12">
+					<input class="signUp form-control" type="text" id="business_name" placeholder="Business name">
+				</div>
+			</div>
+			<div class="row padded-row">
+				<div class="col-lg-4">
+					<input class="signUp form-control" type="text" id="industry" placeholder="Industry">
+				</div>
+				<div class="col-lg-4">
+					<input class="signUp form-control" type="text" id="business_size" placeholder="Business size">
+				</div>
+				<div class="col-lg-4">
+					<input class="signUp form-control" type="number" id="user_count" placeholder="Number of lime users">
+				</div>
+			</div>
 			<a href="#" id="continueSignUp" class="btn btn-lime btn-block">Continue</a>
 		</div>
-		<div class="text-center col-lg-4">Just share some info so you can check it out, love it, and give us your money.</div>
+		<div class="text-center col-lg-4">
+			<h1>Tell us about your business</h1>
+			<div class="horiz-space"></div>
+			<h3>Lime works wonders whether you run a team of 10 or a team of 1,000,000</h3>
+		</div>
 	</div>
 </div>
 
