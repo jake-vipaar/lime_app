@@ -1,0 +1,110 @@
+<head>
+	<%= javascript_include_tag "jquery" %>
+	<%= javascript_include_tag "bootstrap" %>
+	<%= stylesheet_link_tag "bootstrap" %>
+	<style type="text/css">
+		.center-text{
+			text-align: center;
+		}
+
+		.tall{
+			height: 800px;
+		}
+
+		.btn-lime{
+			color: #fff;
+  			background-color: #3F6E2D;
+  			border-color: #4cae4c;
+		}
+
+	</style>
+	<script type="text/javascript">
+	$(function(){
+		var infoContainer = $('#infoContainer');
+		var versionContainer = $('#versionContainer');
+		var priceContainer = $('#priceContainer');
+
+		var scrollToContainer = function(container){
+			$('html,body').animate({
+   				scrollTop: container.offset().top
+			});
+		}
+
+		var showContainer = function(container){
+			$(container).removeClass('hidden');
+		}
+
+		var goToContainer = function(container){
+			showContainer(container);
+			scrollToContainer(container);
+		}
+
+		$('#tryIt').on('click', function(){
+			goToContainer(infoContainer);
+		});
+
+		$('#continueSignUp').on('click', function(){
+			goToContainer(versionContainer);
+		});
+
+		$('.version-btn').on('click', function(){
+			//todo: save version chosen
+			goToContainer(priceContainer);
+		})
+	})
+	</script>
+</head>
+
+<div id="topContainer" class="tall container-fluid">
+	<div class="row">
+  		<div id="topImage" class="col-lg-8"><h1>HEADER IMAGE HERE</h1></div>
+  		<div id="getStarted" class="col-lg-4">
+   			<h2 class="center-text">A fresh approach</h2>
+   			<h5 class="center-text">a blurb about how awesome it is to help people all around the world.<br>
+   				It should be kinda long so that it fills the available space nicely. Marketing will take care of this. <br>They always have plenty to say.</h5>
+   				<a href="#" id="tryIt" class="btn btn-lime btn-block">Try it free</a>
+   		</div>
+	</div>
+</div>
+
+<div id="infoContainer" class="tall container-fluid hidden">
+	<div class="row">
+		<div class="col-lg-4"></div>
+		<div class="col-lg-4">
+			<input class="signUp form-control half-width" type="text" placeholder="First name"><input class="signUp form-control" type="text" placeholder="Last name"/><br>
+			<input class="signUp form-control half-width" type="text" placeholder="Email"><br>
+			<input class="signUp form-control" type="text" placeholder="Password"><br>
+			<input class="signUp form-control" type="text" placeholder="Business name"><input class="signUp form-control" type="text" placeholder="Business size"><br>
+			<input class="signUp form-control" type="text" placeholder="Number of lime users"><br>
+			<a href="#" id="continueSignUp" class="btn btn-lime btn-block">Continue</a>
+		</div>
+		<div class="text-center col-lg-4">Just share some info so you can check it out, love it, and give us your money.</div>
+	</div>
+</div>
+
+<div id="versionContainer" class="tall container-fluid hidden text-center">
+  <div class="row">
+	<div class="col-lg-2"></div>
+	<div class="col-lg-4">
+		<h1>Lite</h1>
+		<h4>The lite version is really awesome. But you will not get to see unicorns and you can only get bacon if you call us about 40 times. We hope you enjoy it. But you should probably go premium.</h4>
+		<a href="#" id="choseLite" class="btn btn-lime btn-block version-btn">Go lite</a>
+	</div>
+	<div class="col-lg-4">
+		<h1>Premium</h1>
+		<h4>The premium version is loaded with all of the unicorns and bacon you could ever desire. Also, if you call us, we will send you crispier bacon and come flip your pancakes for you. This is definitely the way to go.</h4>
+		<a href="#" id="chosePremium" class="btn btn-lime btn-block version-btn">Live it up</a>
+	</div>
+	<div class="col-lg-2"></div>
+  </div>
+</div>
+
+<div id="priceContainer" class="tall container-fluid hidden text-center">
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6">
+		<h3>$1,000,000</h3><br>
+		<a target="_blank" href="https://itunes.apple.com/us/app/lime-app/id867775336?mt=8" id="chosePremium" class="btn btn-lime btn-block version-btn">Download Now!</a>
+	</div>
+	<div class="col-lg-3"></div>
+</div>
+
