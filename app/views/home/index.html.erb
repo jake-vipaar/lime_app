@@ -3,6 +3,10 @@
 	<%= javascript_include_tag "bootstrap" %>
 	<%= stylesheet_link_tag "bootstrap" %>
 	<style type="text/css">
+		body{
+			background-color: #fdfdfd;
+			color: #545454;
+		}
 		.center-text{
 			text-align: center;
 		}
@@ -12,9 +16,13 @@
 		}
 
 		.btn-lime{
-			color: #fff;
-  			background-color: #3F6E2D;
-  			border-color: #4cae4c;
+			color: #fdfdfd;
+  			background-color: rgb(178, 217, 108);
+  			border-color: rgb(126, 168, 68);
+		}
+
+		.btn:hover{
+			color: #fdfdfd;
 		}
 
 	</style>
@@ -103,7 +111,7 @@
 	<div class="col-lg-3"></div>
 	<div class="col-lg-6">
 		<h3>$1,000,000</h3><br>
-		<a target="_blank" href="https://itunes.apple.com/us/app/lime-app/id867775336?mt=8" id="chosePremium" class="btn btn-lime btn-block version-btn">Download Now!</a>
+		<a target="_blank" href="https://itunes.apple.com/us/app/lime-app/id867775336?mt=8" class="btn btn-lime btn-block version-btn">Download Now!</a>
 	</div>
 	<div class="col-lg-3"></div>
 </div>
