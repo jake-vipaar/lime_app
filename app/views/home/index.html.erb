@@ -43,6 +43,7 @@
 
 		#topContainer{
 			padding-left: 0;
+			margin-right: 15px;
 		}
 
 		#infoContainer{
@@ -59,12 +60,21 @@
         	box-shadow: 0px 1px 1px #b94a48 inset, 0px 0px 6px #b94a48;
     	}
 
+    	[class*="col-"] {
+		    float: none;
+		    display: table-cell;
+		    vertical-align: top;
+		}
+
+		#tryIt{
+			position: absolute; bottom: 0;
+		}
+
 	</style>
 	<script type="text/javascript">
 	$(function(){
 		var email_regex = new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 		var infoContainer = $('#infoContainer');
-		var versionContainer = $('#versionContainer');
 		var priceContainer = $('#priceContainer');
 		var importantFields = ['password', 'email']
 		var error_class = 'has-error'
@@ -119,7 +129,7 @@
 			var valid = validate_input();
 			if(valid){
 				//todo:server-side validation (model-binding)
-				goToContainer(versionContainer);
+				// goToContainer(versionContainer);
 			}
 			return false;
 		});
@@ -141,8 +151,8 @@
 
 <div id="topContainer" class="container-fluid">
 	<div class="row">
-  		<div id="topImage" class="col-lg-8"><img class="img-responsive img-rounded" src="/assets/lime-logo.png"/></div>
-  		<div id="getStarted" class="col-lg-4">
+  		<div id="topImage" class="col-lg-9"><img class="img-responsive img-rounded" src="/assets/lime-logo.png"/></div>
+  		<div id="getStarted" class="col-lg-3">
    			<h1 class="center-text">A fresh approach to assistance</h1>
    			<div class="horiz-space"></div>
    			<h3 class="center-text">Down the street or across the pond.</h3>
@@ -200,7 +210,19 @@
 							<%= f.text_field :user_count, {:class => "form-control signUp", :placeholder => "Number of lime users", :type => "number"} %>
 						</div>
 					</div>
-					<%= f.submit "Continue", class: "btn btn-lime btn-block" %>
+					<div class="row center-text">
+						<div class="row padded-row"><h1>Select Your Version</h1></div>
+						<div class="col-lg-5">
+							<%= f.submit "Premium", class: "btn btn-lime btn-lg" %>
+							<h2>Enjoy unlimited everything all the time.</h2>
+						</div>
+						<div class="col-lg-1"></div>
+						<div class="col-lg-5">
+							<%= f.submit "Lite", class: "btn btn-lime btn-lg" %>
+							<h2>Learn to love lime!<h2><h6>*data limit of 2gb/month</h6>
+						</div>
+					</div>
+					
 				<% end %>
 		</div>
 		<div class="text-center col-lg-4">
@@ -209,23 +231,6 @@
 			<h3>Lime works wonders whether you run a team of 10 or a team of 10,000</h3>
 		</div>
 	</div>
-</div>
-
-<div id="versionContainer" class="tall container-fluid hidden text-center">
-  <div class="row">
-	<div class="col-lg-2"></div>
-	<div class="col-lg-4">
-		<h1>Lite</h1>
-		<h4>The lite version is really awesome. But you will not get to see unicorns and you can only get bacon if you call us about 40 times. We hope you enjoy it. But you should probably go premium.</h4>
-		<a href="#" id="choseLite" class="btn btn-lime btn-block version-btn">Go lite</a>
-	</div>
-	<div class="col-lg-4">
-		<h1>Premium</h1>
-		<h4>The premium version is loaded with all of the unicorns and bacon you could ever desire. Also, if you call us, we will send you crispier bacon and come flip your pancakes for you. This is definitely the way to go.</h4>
-		<a href="#" id="chosePremium" class="btn btn-lime btn-block version-btn">Live it up</a>
-	</div>
-	<div class="col-lg-2"></div>
-  </div>
 </div>
 
 <div id="priceContainer" class="tall container-fluid hidden text-center">
