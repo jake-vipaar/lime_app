@@ -1,3 +1,60 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+	body{
+			background-color: #fdfdfd;
+			color: #545454;
+		}
+
+		.center-text{
+			text-align: center;
+		}
+
+		.tall{
+			height: 800px;
+		}
+
+		.half-width{
+			width: 48%;
+			display: inline-block;
+			margin-top: 15px;
+			margin-left: 2.5px;
+		}
+
+		.right-textbox{
+			margin-left: 15px;
+		}
+
+		.btn-lime{
+			color: #fdfdfd;
+  			background-color: rgb(126, 168, 68);
+  			border-color: rgb(126, 168, 68);
+		}
+
+		.btn:hover{
+			color: #fdfdfd;
+		}
+
+		.horiz-space{
+			height: 40px;
+		}
+
+		#topContainer{
+			padding-left: 0;
+			margin-right: 15px;
+		}
+
+		#infoContainer{
+			padding-top: 15px;
+		}
+
+		.padded-row{
+			margin-top: 15px;
+			margin-bottom: 15px;
+		}
+
+		input.has-error, select.has-error {
+        	border: 1px solid #b94a48;
+        	box-shadow: 0px 1px 1px #b94a48 inset, 0px 0px 6px #b94a48;
+    	}
