@@ -2,7 +2,7 @@ $(function(){
 		var email_regex = new RegExp(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 		var infoContainer = $('#infoContainer');
 		var priceContainer = $('#priceContainer');
-		var importantFields = ['password', 'email']
+		var importantFields = ['business_user_password', 'business_user_email']
 		var error_class = 'has-error'
 
 		var scrollToContainer = function(container){
@@ -20,27 +20,48 @@ $(function(){
 			scrollToContainer(container);
 		}
 
+		var calculate_price = function(button){
+			num_users = $('#business_user_user_count').val()
+			if(button.id == "premiumButton"){
+				return num_users * 25;
+			} else {
+				return num_users * 10;
+			}
+		}
+
+		var add_error = function(input){
+			$(input).addClass(error_class);
+			// if(input.data('validationField')){
+			// 	input.data('validationField').removeClass('hidden')
+			// }
+		}
+
+		var remove_error = function(input){
+			$(input).removeClass(error_class);
+			// if(input.data('validationField')){
+			// 	input.data('validationField').addClass('hidden')
+			// }
+		}
+
+
 		var validate_input = function(){
 			var valid = true;
 			var inputs = $('.signUp');
 
 			$.each(inputs, function(index, input){
-				var input_object = $(input);
+				remove_error(input);
 				if(input.value.length === 0){
 					valid = false;
-					input_object.addClass(error_class);
-				}else if($.inArray(input.id, importantFields)){
-					if(input.id === "password" && input.value.length < 8){
+					add_error(input)
+				}else if($.inArray(input.id, importantFields) > -1){
+					if(input.id === "business_user_password" && input.value.length < 8){
 						valid = false;
-						input_object.addClass(error_class);
+						add_error(input)				
 					}
-						
-					if(input.id === "email" && !email_regex.test(input.value)){
+					if(input.id === "business_user_email" && !email_regex.test(input.value)){
 						valid = false;
-						input_object.addClass(error_class);
+						add_error(input);
 					}
-				}else{
-					input_object.removeClass(error_class);
 				}
 			});
 
@@ -61,21 +82,26 @@ $(function(){
 		});
 
 		$('.version-btn').on('click', function(){
-			$.ajax({
-				type: "POST",
-				url: 'business_users',
-				data: $('#userInfoForm').serializeArray(),
-				dataType: "json",
-				success: function(){
-					alert('woot!');
-				},
-				fail: function(){
-					alert('fail!')
-				}
-			});
-			// var valid = validate_input();
-			// if(valid)
-			// 	goToContainer(priceContainer);
+			var valid = validate_input();
+			if(valid){
+				var button = $(this)[0];
+				var price = calculate_price(button);
+				$('#price').html('$' + price);
+				goToContainer(priceContainer);
+			}
+			// $.ajax({
+			// 	type: "POST",
+			// 	url: 'business_users',
+			// 	data: $('#userInfoForm').serializeArray(),
+			// 	dataType: "json",
+			// 	success: function(){
+			// 		alert('woot!');
+			// 	},
+			// 	fail: function(){
+			// 		alert('fail!')
+			// 	}
+			// });
+			
 		})
 
 		$('form#userInfoForm').bind("ajax:success", function(event, data, status, xhr) {
