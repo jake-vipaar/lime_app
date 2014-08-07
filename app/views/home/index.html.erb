@@ -125,10 +125,17 @@
 		});
 
 		$('.version-btn').on('click', function(){
-			//todo: save version chosen
 			goToContainer(priceContainer);
 		})
-	})
+
+		$('form#userInfoForm').bind("ajax:success", function(event, data, status, xhr) {
+		  alert('done');
+		}).on('ajax:error',function(xhr, status, error){
+	      alert('Failed.');
+	    }).on('ajax:before', function(event, data, status, xhr) {
+		  alert('before');
+		});
+	});
 	</script>
 </head>
 
@@ -148,51 +155,58 @@
 	</div>
 </div>
 
+
+
 <div id="infoContainer" class="tall container-fluid hidden">
 	<div class="row">
 		<div class="col-lg-4">
 			<img src="/assets/juicy-limes.JPG" class="img-responsive img-circle">
 		</div>
 		<div class="col-lg-4" id="info-div">
-			<div class="row">
-				<div class="col-lg-6">
-					<input class="signUp form-control" type="text" id="first_name" placeholder="First name">
-				</div>
-				<div class="col-lg-6">
-					<input class="signUp form-control" type="text" id="last_name" placeholder="Last name">
-				</div>
-			</div>
-			<div class="row padded-row">
-				<div class="col-lg-6">
-					<input class="signUp form-control" type="text" id="email" placeholder="Email">
-				</div>
-				<div class="col-lg-6">
-					<input class="signUp form-control" type="password" id="password" data-help="passwordHelp" placeholder="Password">
-					<span id="passwordHelp" class="help-block hidden">Must be at least 8 characters.</span>
-				</div>
-			</div>
-			<div class="row padded-row">
-				<div class="col-lg-12">
-					<input class="signUp form-control" type="text" id="business_name" placeholder="Business name">
-				</div>
-			</div>
-			<div class="row padded-row">
-				<div class="col-lg-4">
-					<input class="signUp form-control" type="text" id="industry" placeholder="Industry">
-				</div>
-				<div class="col-lg-4">
-					<input class="signUp form-control" type="text" id="business_size" placeholder="Business size">
-				</div>
-				<div class="col-lg-4">
-					<input class="signUp form-control" type="number" id="user_count" placeholder="Number of lime users">
-				</div>
-			</div>
-			<a href="#" id="continueSignUp" class="btn btn-lime btn-block">Continue</a>
+			
+			
+				<%= form_for :business_user, url: business_users_path, remote: true, :html => { id: 'userInfoForm' } do |f| %>
+					<div class="row">
+						<div class="col-lg-6">
+							<%= f.text_field :first_name, {:class => "form-control signUp", :placeholder => "First Name"} %>
+						</div>
+						<div class="col-lg-6">
+							<%= f.text_field :last_name, {:class => "form-control signUp", :placeholder => "Last Name"} %>
+						</div>
+					</div>
+
+					<div class="row padded-row">
+						<div class="col-lg-6">
+							<%= f.text_field :email, {:class => "form-control signUp", :placeholder => "Email"} %>
+						</div>
+						<div class="col-lg-6">
+							<%= f.text_field :password, {:class => "form-control signUp", :placeholder => "Password", :type => "password"} %>
+							<span id="passwordHelp" class="help-block hidden">Must be at least 8 characters.</span>
+						</div>
+					</div>
+					<div class="row padded-row">
+						<div class="col-lg-12">
+							<%= f.text_field :business_name, {:class => "form-control signUp", :placeholder => "Business name"} %>
+						</div>
+					</div>
+					<div class="row padded-row">
+						<div class="col-lg-4">
+							<%= f.text_field :industry, {:class => "form-control signUp", :placeholder => "Industry"} %>
+						</div>
+						<div class="col-lg-4">
+							<%= f.text_field :business_size, {:class => "form-control signUp", :placeholder => "Business size"} %>
+						</div>
+						<div class="col-lg-4">
+							<%= f.text_field :user_count, {:class => "form-control signUp", :placeholder => "Number of lime users", :type => "number"} %>
+						</div>
+					</div>
+					<%= f.submit "Continue", class: "btn btn-lime btn-block" %>
+				<% end %>
 		</div>
 		<div class="text-center col-lg-4">
 			<h1>Tell us about your business</h1>
 			<div class="horiz-space"></div>
-			<h3>Lime works wonders whether you run a team of 10 or a team of 1,000,000</h3>
+			<h3>Lime works wonders whether you run a team of 10 or a team of 10,000</h3>
 		</div>
 	</div>
 </div>
