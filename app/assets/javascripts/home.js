@@ -81,34 +81,19 @@ $(function(){
 			return false;
 		});
 
-		$('.version-btn').on('click', function(){
-			var valid = validate_input();
-			if(valid){
-				var button = $(this)[0];
-				var price = calculate_price(button);
-				$('#price').html('$' + price);
-				goToContainer(priceContainer);
-			}
-			// $.ajax({
-			// 	type: "POST",
-			// 	url: 'business_users',
-			// 	data: $('#userInfoForm').serializeArray(),
-			// 	dataType: "json",
-			// 	success: function(){
-			// 		alert('woot!');
-			// 	},
-			// 	fail: function(){
-			// 		alert('fail!')
-			// 	}
-			// });
-			
+		$('.version-btn').on('click', function(e){
+			$.ajax({
+				type: "POST",
+				url: 'business_users',
+				data: $('#userInfoForm').serializeArray(),
+				dataType: "json",
+				success: function(){
+					alert('woot!');
+				},
+				fail: function(){
+					alert('fail!')
+				}
+			});
+			return false;
 		})
-
-		$('form#userInfoForm').bind("ajax:success", function(event, data, status, xhr) {
-		  alert('done');
-		}).on('ajax:error',function(xhr, status, error){
-	      alert('Failed.');
-	    }).on('ajax:before', function(event, data, status, xhr) {
-		  alert('before');
-		});
 	});

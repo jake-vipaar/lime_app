@@ -1,8 +1,3 @@
-<head>
-	<%= javascript_include_tag "jquery" %>
-	<%= javascript_include_tag "bootstrap" %>
-	<%= stylesheet_link_tag "bootstrap" %>
-</head>
 
 <div id="topContainer" class="container-fluid">
 	<div class="row">
@@ -21,7 +16,7 @@
 </div>
 
 <div id="infoContainer" class="tall container-fluid hidden">
-	<%= form_for :business_user, url: business_users_path, remote: true, :html => { id: 'userInfoForm' } do |f| %>
+	<%= form_for :business_user, url: business_users_path, :html => { id: 'userInfoForm' } do |f| %>
 	<div class="row">
 		<div class="text-center col-lg-4">
 			<h1>Tell us about your business</h1>
@@ -61,7 +56,7 @@
 							<%= f.select :business_size, @business_sizes, {}, {:class => "form-control signUp", :placeholder => "Business size"} %>
 						</div>
 						<div class="col-lg-4">
-							<%= f.text_field :user_count, {:class => "form-control signUp", :placeholder => "Number of lime users", :type => "number"} %>
+							<%= f.text_field :user_count, {:class => "form-control signUp", :placeholder => "Number of lime users", :type => "number", :min => "1", :step => "1" } %>
 						</div>
 					</div>
 		</div>
@@ -70,12 +65,12 @@
 				<div class="row padded-row"><h1>Select Your Version</h1></div>
 				<div class="col-lg-5">
 					<%= f.button "Premium", class: "version-btn btn btn-lime btn-lg", id: 'premiumButton' %>
-					<h2>Enjoy unlimited everything all the time.</h2>
+					<h4>Enjoy unlimited everything all the time.</h4>
 				</div>
 				<div class="col-lg-1"></div>
 				<div class="col-lg-5">
 					<%= f.button "Lite", class: "version-btn btn btn-lime btn-lg", id: 'liteButton' %>
-					<h2>Learn to love lime!<h2><h6>*data limit of 2gb/month</h6>
+					<h4>Learn to love lime!<h4><h6>*data limit of 2gb/month</h6>
 				</div>
 			</div>
 		</div>
@@ -86,8 +81,11 @@
 <div id="priceContainer" class="tall container-fluid hidden text-center">
 	<div class="col-lg-3"></div>
 	<div class="col-lg-6">
-		<h2>Your Price:</h2>
-		<h4 id="price"></h4><h4>/month</h4><br>
+		<div class="row">
+			<h2>Your Price:</h2>
+			<h4 id="price"></h4>
+			<h4>/month</h4><br>
+		</div>
 		<a target="_blank" href="https://itunes.apple.com/us/app/lime-app/id867775336?mt=8" class="btn btn-lime btn-lg">Download Now!</a>
 	</div>
 	<div class="col-lg-3"></div>
