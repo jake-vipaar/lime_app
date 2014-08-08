@@ -1,5 +1,6 @@
 class BusinessUser < ActiveRecord::Base
-  attr_accessible :business_name, :business_size, :email, :first_name, :industry, :last_name, :password, :user_count
+  has_secure_password
+  attr_accessible :business_name, :business_size, :email, :first_name, :industry, :last_name, :password, :user_count, :password_digest
 
   validates :business_name, presence: true
   validates :business_size, presence: true
