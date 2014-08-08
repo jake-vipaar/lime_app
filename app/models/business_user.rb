@@ -1,6 +1,6 @@
 class BusinessUser < ActiveRecord::Base
-  has_secure_password
-  attr_accessible :business_name, :business_size, :email, :first_name, :industry, :last_name, :password, :user_count, :password_digest
+  include ActiveModel::ForbiddenAttributesProtection
+  has_secure_password validations: false #todo: add password_confirmation and get rid of validations: false
 
   validates :business_name, presence: true
   validates :business_size, presence: true
