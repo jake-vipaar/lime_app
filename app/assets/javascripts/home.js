@@ -79,7 +79,16 @@ $(function(){
 			goToContainer(infoContainer);
 		});
 
+		var show_failure_message = function(){
+			$('#serverFailure').removeClass('hidden')
+		}
+
+		var hide_failure_message = function(){
+			$('#serverFailure').addClass('hidden')
+		}
+
 		$('.version-btn').on('click', function(e){
+				hide_failure_message();
 				var valid = validate_input();
 				var that = $(this);
 				if(valid){
@@ -88,12 +97,16 @@ $(function(){
 						url: 'business_users',
 						data: $('#userInfoForm').serializeArray(),
 						dataType: "json",
-						success: function(){
-							goToContainer(priceContainer);
-							set_price(that);
+						success: function(successful_save){
+							if(successful_save){
+								goToContainer(priceContainer);
+								set_price(that);
+							} else {
+								show_failure_message();
+							}
 						},
 						fail: function(){
-							alert('fail!')
+							show_failure_message();
 						}
 					});
 			}

@@ -4,8 +4,7 @@ class BusinessUsersController < ApplicationController
 
 	def create
 		@business_user = BusinessUser.new(params[:business_user])
-		@business_user.save
-		render json: params[:business_user]
+		render json: @business_user.save
 	end
 
 	def show
