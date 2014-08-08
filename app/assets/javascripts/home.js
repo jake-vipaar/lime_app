@@ -22,7 +22,7 @@ $(function(){
 
 		var calculate_price = function(button){
 			num_users = $('#business_user_user_count').val()
-			if(button.id == "premiumButton"){
+			if(button.attr("id") == "premiumButton"){
 				return num_users * 25;
 			} else {
 				return num_users * 10;
@@ -31,16 +31,18 @@ $(function(){
 
 		var add_error = function(input){
 			$(input).addClass(error_class);
-			// if(input.data('validationField')){
-			// 	input.data('validationField').removeClass('hidden')
-			// }
+			var validation_field_id = $(input).attr("data-validationField");
+			if(validation_field_id){
+				$('#' + validation_field_id).removeClass('hidden');
+			}
 		}
 
 		var remove_error = function(input){
 			$(input).removeClass(error_class);
-			// if(input.data('validationField')){
-			// 	input.data('validationField').addClass('hidden')
-			// }
+			var validation_field_id = $(input).attr("data-validationField");
+			if(validation_field_id){
+				$('#' + validation_field_id).addClass('hidden');
+			}
 		}
 
 
@@ -68,32 +70,34 @@ $(function(){
 			return valid;
 		}
 
+		var set_price = function(button){
+			var price = calculate_price(button);
+			$('#price').html('$' + price);
+		}
+
 		$('#tryIt').on('click', function(){
 			goToContainer(infoContainer);
 		});
 
-		$('#continueSignUp').on('click', function(){
-			var valid = validate_input();
-			if(valid){
-				//todo:server-side validation (model-binding)
-				// goToContainer(versionContainer);
-			}
-			return false;
-		});
-
 		$('.version-btn').on('click', function(e){
-			$.ajax({
-				type: "POST",
-				url: 'business_users',
-				data: $('#userInfoForm').serializeArray(),
-				dataType: "json",
-				success: function(){
-					alert('woot!');
-				},
-				fail: function(){
-					alert('fail!')
-				}
-			});
+				var valid = validate_input();
+				var that = $(this);
+				if(valid){
+					$.ajax({
+						type: "POST",
+						url: 'business_users',
+						data: $('#userInfoForm').serializeArray(),
+						dataType: "json",
+						success: function(){
+							goToContainer(priceContainer);
+							set_price(that);
+						},
+						fail: function(){
+							alert('fail!')
+						}
+					});
+			}
+			
 			return false;
 		})
 	});
